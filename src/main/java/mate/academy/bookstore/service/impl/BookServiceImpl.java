@@ -19,7 +19,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book get(Long id) {
-        return bookRepository.get(id).get();
+        return bookRepository.findById(id).get();
     }
 
     @Override
