@@ -1,7 +1,17 @@
 package mate.academy.bookstore.repository;
 
+import java.util.List;
+import java.util.Optional;
 import mate.academy.bookstore.model.Book;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface BookRepository extends JpaRepository<Book, Long> {
+@Repository
+public interface BookRepository {
+    Book save(Book book);
+
+    Optional<Book> findById(Long id);
+
+    List<Book> findAll();
+
+    List<Book> findAllByName(String name);
 }

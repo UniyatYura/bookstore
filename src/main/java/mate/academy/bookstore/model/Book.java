@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Table(name = "books")
@@ -18,6 +19,7 @@ public class Book {
     private Long id;
     private String title;
     private String author;
+    @ToString.Exclude
     @Column(unique = true)
     private String isbn;
     private BigDecimal price;
