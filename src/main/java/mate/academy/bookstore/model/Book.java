@@ -21,14 +21,18 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false, unique = true)
     private String title;
+    @Column(nullable = false)
     private String author;
     @ToString.Exclude
-    @Column(unique = true)
+    @Column(nullable = false, unique = true)
     private String isbn;
+    @Column(nullable = false)
     private BigDecimal price;
     private String description;
+    @Column(name = "cover_image")
     private String coverImage;
-    @Column(nullable = false)
+    @Column(nullable = false, name = "is_deleted")
     private boolean isDeleted = false;
 }
