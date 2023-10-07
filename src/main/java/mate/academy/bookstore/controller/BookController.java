@@ -33,21 +33,18 @@ public class BookController {
     @GetMapping
     @Operation(summary = "Get all books from DB",
             description = "Get a list off all available books")
-    @PreAuthorize("hasRole('ROLE_USER')")
     public List<BookDto> findAll(Pageable pageable) {
         return bookService.findAll(pageable);
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Get the book by ID", description = "Get the book by ID from DB")
-    @PreAuthorize("hasRole('ROLE_USER')")
     public BookDto findById(@PathVariable Long id) {
         return bookService.findById(id);
     }
 
     @GetMapping("/by-name")
     @Operation(summary = "Get a book by name", description = "Get a book by name from DB")
-    @PreAuthorize("hasRole('ROLE_USER')")
     public List<BookDto> getAllByName(@RequestParam String title) {
         return bookService.getAllByName(title);
     }
