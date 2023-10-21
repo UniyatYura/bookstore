@@ -3,15 +3,12 @@ package mate.academy.bookstore.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import java.util.HashSet;
 import java.util.Set;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,18 +23,23 @@ import org.hibernate.annotations.Where;
 @Where(clause = "is_deleted = false")
 public class ShoppingCart {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "shopping_cart_items",
-            joinColumns = @JoinColumn(name = "shopping_cart_id"),
-            inverseJoinColumns = @JoinColumn(name = "cart_items_id"))
+    @JoinColumn(name = "user_id")
+    @MapsId
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Set<CartItem> cartItems = new HashSet<>();
-    @Column(nullable = false, name = "is_deleted")
+    private User user;
+    @OneToMany(fetch = FetchType.EAGER,
+            mappedBy = "shoppingCart")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<CartItem> cartItems;
+    @Column(name = "is_deleted", nullable = false)
     private boolean isDeleted = false;
+
+    public void addCartItem(CartItem cartItem) {
+        cartItems.add(cartItem);
+        cartItem.setShoppingCart(this);
+    }
 }
