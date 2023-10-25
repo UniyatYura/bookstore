@@ -34,7 +34,7 @@ public class OrderController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @Operation(summary = "Create new order")
+    @Operation(summary = "Create order", description = "Create new order")
     @PreAuthorize("hasRole('ROLE_USER')")
     public OrderResponseDto createOrder(Authentication authentication,
                                         @RequestBody @Valid OrderRequestDto orderRequestDto) {
@@ -44,7 +44,7 @@ public class OrderController {
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_USER')")
-    @Operation(summary = "Get all orders")
+    @Operation(summary = "Get all orders", description = "Get all users order history")
     public List<OrderResponseDto> findAllOrdersByUser(Authentication authentication,
                                                       Pageable pageable) {
         User user = (User) authentication.getPrincipal();
@@ -53,7 +53,7 @@ public class OrderController {
 
     @PatchMapping("/{orderId}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @Operation(summary = "Update order status")
+    @Operation(summary = "Update order status", description = "Update order status")
     public OrderResponseDto updateOrderStatus(@PathVariable Long orderId,
                                               @RequestBody @Valid
                 OrderUpdateStatusRequestDto orderUpdateStatusRequestDto) {
@@ -62,12 +62,13 @@ public class OrderController {
 
     @GetMapping("/{orderId}/items")
     @PreAuthorize("hasRole('ROLE_USER')")
-    @Operation(summary = "Get all order items from order")
+    @Operation(summary = "Get all order items from order",
+            description = "Find all order items")
     public Set<OrderItemResponseDto> findAllOrderItemsByOrder(@PathVariable Long orderId) {
         return orderService.findAllOrderItems(orderId);
     }
 
-    @Operation(summary = "Find order item by id ")
+    @Operation(summary = "Find order item by id ", description = "Find order item by ID")
     @GetMapping("/{orderId}/items/{itemId}")
     @PreAuthorize("hasRole('USER')")
     public OrderItemResponseDto findOrderItemById(@PathVariable Long orderId,

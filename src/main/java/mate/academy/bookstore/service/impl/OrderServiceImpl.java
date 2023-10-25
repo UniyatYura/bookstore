@@ -46,14 +46,10 @@ public class OrderServiceImpl implements OrderService {
                         + userId));
         Set<CartItem> cartItems = shoppingCart.getCartItems();
         if (shoppingCart.getCartItems().isEmpty()) {
-            throw new RuntimeException("Your shopping cart is empty!");
+            throw new EntityNotFoundException("Your shopping cart is empty!");
         }
-        Order order = new Order();
-        order.setUser(user);
+        Order order = createOrderByUser(user);
         Set<OrderItem> orderItems = collectOrderItems(order, cartItems);
-        order.setShippingAddress(orderRequestDto.getShippingAddress());
-        order.setOrderDate(LocalDateTime.now());
-        order.setStatus(Order.Status.PENDING);
         order.setTotal(calculatePrice(orderItems));
         order.setOrderItems(orderItems);
         shoppingCart.setCartItems(Collections.emptySet());
@@ -113,5 +109,14 @@ public class OrderServiceImpl implements OrderService {
         return orderItems.stream()
                 .map(oi -> BigDecimal.valueOf(oi.getQuantity()).multiply(oi.getPrice()))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    private Order createOrderByUser(User user) {
+        Order order = new Order();
+        order.setStatus(Order.Status.PENDING);
+        order.setOrderDate(LocalDateTime.now());
+        order.setUser(user);
+        order.setShippingAddress(user.getShippingAddress());
+        return order;
     }
 }
