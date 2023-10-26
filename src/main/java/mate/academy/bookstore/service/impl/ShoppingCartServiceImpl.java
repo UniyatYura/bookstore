@@ -29,12 +29,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final UserService userService;
 
     @Override
-    public ShoppingCart getShoppingCartModel() {
-        User user = userService.getUser();
-        return shoppingCartRepository.findById(user.getId()).get();
-    }
-
-    @Override
     public ShoppingCartResponseDto getShoppingCartDto() {
         return shoppingCartMapper.toDto(getShoppingCartModel());
     }
@@ -74,5 +68,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             throw new EntityNotFoundException("Can't delete cart item by id: " + cartItemId);
         }
         cartItemRepository.deleteById(cartItemId);
+    }
+
+    private ShoppingCart getShoppingCartModel() {
+        User user = userService.getUser();
+        return shoppingCartRepository.findById(user.getId()).get();
     }
 }

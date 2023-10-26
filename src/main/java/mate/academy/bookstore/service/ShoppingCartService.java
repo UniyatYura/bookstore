@@ -3,11 +3,8 @@ package mate.academy.bookstore.service;
 import mate.academy.bookstore.dto.BookQuantityDto;
 import mate.academy.bookstore.dto.CartItemRequestDto;
 import mate.academy.bookstore.dto.ShoppingCartResponseDto;
-import mate.academy.bookstore.model.ShoppingCart;
 
 public interface ShoppingCartService {
-    ShoppingCart getShoppingCartModel();
-
     ShoppingCartResponseDto getShoppingCartDto();
 
     ShoppingCartResponseDto getShoppingCartByUserId(Long id);

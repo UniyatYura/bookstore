@@ -15,6 +15,5 @@ public interface UserMapper {
     @Mapping(target = "roles", ignore = true)
     @Mapping(target = "deleted", ignore = true)
     @Mapping(target = "authorities", ignore = true)
-
     User toUserModel(UserRegistrationRequestDto requestDto);
 }
