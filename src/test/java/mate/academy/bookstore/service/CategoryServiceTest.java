@@ -1,4 +1,4 @@
-package mate.academy.bookstore;
+package mate.academy.bookstore.service;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -98,15 +98,14 @@ public class CategoryServiceTest {
         // given
         Long testId = 100L;
         Mockito.when(categoryRepository.findById(testId))
-                .thenThrow(new EntityNotFoundException("Can't find category by id: "
-                        + testId));
+                .thenReturn(Optional.empty());
         //when
         EntityNotFoundException exception =
                 assertThrows(EntityNotFoundException.class,
                         () -> categoryService.getById(testId));
         // then
         String actual = exception.getMessage();
-        String expected = "Can't find category by id: " + testId;
+        String expected = "Can't find category by id = " + testId;
         Assertions.assertEquals(expected, actual);
     }
 
@@ -151,8 +150,7 @@ public class CategoryServiceTest {
         CategoryRequestDto createCategoryRequestDto = getCreateCategoryRequestDto();
         Long testId = 100L;
         Mockito.when(categoryRepository.findById(testId))
-                .thenThrow(new EntityNotFoundException("Can't find category by id "
-                        + testId));
+                .thenReturn(Optional.empty());
         // when
         EntityNotFoundException exception =
                 assertThrows(EntityNotFoundException.class,

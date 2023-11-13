@@ -1,4 +1,4 @@
-package mate.academy.bookstore;
+package mate.academy.bookstore.service;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -61,8 +61,7 @@ public class BookServiceTest {
         //given
         Long invalidId = -10L;
         when(bookRepository.findById(invalidId))
-                .thenThrow(new EntityNotFoundException("Can't find book by id = "
-                        + invalidId));
+                .thenReturn(Optional.empty());
         //when
         EntityNotFoundException exception =
                 assertThrows(EntityNotFoundException.class,
@@ -78,8 +77,7 @@ public class BookServiceTest {
         //given
         Long invalidId = 100L;
         when(bookRepository.findById(invalidId))
-                .thenThrow(new EntityNotFoundException("Can't find book by id = "
-                        + invalidId));
+                .thenReturn(Optional.empty());
         //when
         EntityNotFoundException exception =
                 assertThrows(EntityNotFoundException.class,

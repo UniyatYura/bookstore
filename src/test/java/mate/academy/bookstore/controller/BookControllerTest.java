@@ -1,4 +1,4 @@
-package mate.academy.bookstore;
+package mate.academy.bookstore.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
